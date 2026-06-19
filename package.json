@@ -1,6 +1,6 @@
 {
   "name": "@lickle/lex",
-  "version": "0.0.0-dev.3",
+  "version": "0.0.1",
   "description": "A tiny, type-safe parser combinator library",
   "author": "Dan Beaven <dm.beaven@gmail.com>",
   "repository": {
