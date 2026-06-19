@@ -1,0 +1,64 @@
+{
+  "name": "@lickle/lex",
+  "version": "0.0.0-dev.3",
+  "description": "A tiny, type-safe parser combinator library",
+  "author": "Dan Beaven <dm.beaven@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pingid/lickle-lex.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/cjs/index.js",
+  "types": "lib/ts/index.d.ts",
+  "module": "lib/esm/index.js",
+  "sideEffects": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./lib/ts/index.d.ts",
+      "import": "./lib/esm/index.js",
+      "require": "./lib/cjs/index.js"
+    }
+  },
+  "files": [
+    "lib",
+    "src",
+    "README.md",
+    "package.json",
+    "!**/*.test.*",
+    "tsconfig.json"
+  ],
+  "keywords": [
+    "parser",
+    "parser-combinator",
+    "combinator",
+    "parsing",
+    "parse",
+    "grammar",
+    "lexer",
+    "typescript"
+  ],
+  "scripts": {
+    "build": "npm run typecheck && npm run esm && npm run cjs",
+    "format": "prettier --write .",
+    "test": "vitest",
+    "esm": "tsc -p ./tsconfig.esm.json",
+    "cjs": "tsc -p ./tsconfig.cjs.json > /dev/null 2>&1 || true",
+    "typecheck": "tsc --noEmit",
+    "docs:build": "pnpm ldocs build"
+  },
+  "devDependencies": {
+    "@lickle/docs": "0.0.0-dev.20",
+    "jsr": "^0.14.3",
+    "prettier": "^3.8.3",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 120,
+    "trailingComma": "all"
+  }
+}
