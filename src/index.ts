@@ -12,7 +12,8 @@
  * - **primitives** match raw text: {@link char}, {@link str}, {@link regex},
  *   {@link satisfy}, {@link oneOf}, {@link digit}, {@link letter}, {@link eof}.
  * - **combinators** glue parsers together: {@link map}, {@link seq},
- *   {@link alt}, {@link many}, {@link opt}, {@link sepBy}, {@link between}.
+ *   {@link alt}, {@link many}, {@link opt}, {@link sepBy}, {@link between},
+ *   {@link takeWhile}, {@link takeWhile1}.
  * - **lexers** handle whitespace and tokens: {@link token}, {@link symbol},
  *   {@link keyword}, {@link identifier}, {@link numberLit}, {@link stringLit}.
  *
@@ -400,6 +401,32 @@ export const many = <T>(p: Parser<T, any>): Parser<T[], never> =>
  */
 export const many1 = <T, E = Error>(p: Parser<T, E>): Parser<NonEmpty<T>, E> =>
   map(seq(p, many(p)), ([head, tail]) => [head, ...tail])
+
+/**
+ * Match a run of characters satisfying `pred` (zero or more). Always succeeds.
+ *
+ * @example
+ * ```ts
+ * parse(takeWhile((c) => c !== ' '), 'hello world') // 'hello'
+ * ```
+ *
+ * @group Combinators
+ */
+export const takeWhile = (pred: (c: string) => boolean, expected?: string): Parser<string, never> =>
+  map(many(satisfy(pred, expected)), (cs) => cs.join(''))
+
+/**
+ * Match a run of characters satisfying `pred` (one or more).
+ *
+ * @example
+ * ```ts
+ * parse(takeWhile1((c) => c !== ' '), 'hello world') // 'hello'
+ * ```
+ *
+ * @group Combinators
+ */
+export const takeWhile1 = (pred: (c: string) => boolean, expected?: string): Parser<string, ExpectedError> =>
+  map(many1(satisfy(pred, expected)), (cs) => cs.join(''))
 
 /**
  * Apply `p` optionally, yielding its value or `null`. Always succeeds.
